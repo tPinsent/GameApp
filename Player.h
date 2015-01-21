@@ -6,8 +6,8 @@ class Player :
 public:
 	Player(void);
 	~Player(void);
-	 void Initialize();
-  
+	
+	void Initialize();
   void Update(float dt);
   void Draw(SDL_Renderer *renderer, float dt);
 

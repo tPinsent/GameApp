@@ -1,9 +1,9 @@
+#include "Player.h"
 #include "GameObject.h"
 #include "GameEngine.h"
 #include <SDL.h>
 #include <math.h>
 #include "MathUtils.h"
-#include "Player.h"
 
 GameEngine::GameEngine()
 {

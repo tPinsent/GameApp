@@ -6,7 +6,8 @@
 
 #endif // _GAME_ENGINE_H_*/
 #include "MathUtils.h"
-
+#include "GameObject.h"
+#include "Player.h"
 // Forward declaring our renderer and window.
 // Because we're using them as pointers, we don't need to know their size
 // at compile time to define this class.

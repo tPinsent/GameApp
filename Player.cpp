@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "MathUtils.h"
 #include <math.h>
+#include <stdio.h>
 
 Player::Player(void)
 {
@@ -14,12 +15,12 @@ Player::~Player(void)
 
 void Player::Initialize(){
 	
-	pos.x=100.0f;
-	pos.y=100.0f;
+	pos.x=200.0f;
+	pos.y=200.0f;
   endPointOffset.x=10.0f;
 	endPointOffset.y=0.0f;
-  speed = 10.0f;
-  rotationSpeed = 360.0f;
+  speed = 300.0f;
+  rotationSpeed = 0.0f;
 
 }
   
@@ -43,10 +44,22 @@ void Player::Update(float dt){
     case SDLK_DOWN:
       pos.y += (speed * dt);
       break;
+		case SDLK_RIGHT:
+			rotationSpeed = (-300*dt);
+			printf("%d\n",rotationSpeed);
+			break;
+		case SDLK_LEFT:
+			rotationSpeed = (300*dt);
+			printf("%d\n",rotationSpeed);
+			break;
     default:
       break;
     }
   }
+
+	(rotationSpeed > 0) ?
+		rotationSpeed-=(10*dt) : rotationSpeed += (10*dt);
+	
 }
 
 void Player::Draw(SDL_Renderer *renderer, float dt){
@@ -57,7 +70,7 @@ void Player::Draw(SDL_Renderer *renderer, float dt){
   //SDL_RenderDrawPoint(renderer, posX, posY);
 
   static float rotationDegrees = 10.0f;
-  rotationDegrees += (rotationSpeed * dt);
+  rotationDegrees += (rotationSpeed);
   rotationDegrees += (rotationDegrees >= 360.0f ? -360.0f : 0);
 
   float rotationRadians = MathUtils::ToRadians(rotationDegrees);
