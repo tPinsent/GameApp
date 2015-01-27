@@ -1,8 +1,5 @@
-#include "Player.h"
-#include "GameObject.h"
 #include "GameEngine.h"
 #include <SDL.h>
-#include <math.h>
 #include "MathUtils.h"
 
 GameEngine::GameEngine()
@@ -19,45 +16,46 @@ void GameEngine::Initialize()
 {
   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
 
-  window = SDL_CreateWindow("CST8237 Lab",
+  _window = SDL_CreateWindow("CST8237 Lab",
     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     640, 640,
     SDL_WINDOW_SHOWN);
 
-  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
 
-  // Using the default member-wise initializer for our new struct.
- 
-	player = new Player();
-	player->Initialize();
-	oldTime = SDL_GetTicks();
-  currentTime = oldTime;
+  InitializeImpl();
+	
+  /* Get the time at the beginning of our game loop so that we can track the
+  * elapsed difference. */
+  _engineTimer.Start();
 }
 
 void GameEngine::Shutdown()
 {
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
+  _engineTimer.Stop();
+
+  SDL_DestroyRenderer(_renderer);
+  SDL_DestroyWindow(_window);
 }
 
 void GameEngine::Update()
 {
-	oldTime = currentTime;
-  currentTime = SDL_GetTicks();
-  deltaTime = (currentTime - oldTime) / 1000;
-  player->Update(deltaTime);
+  // Calculating the time difference since our last loop.
+  _engineTimer.Update();
+
+  UpdateImpl(_engineTimer.GetDeltaTime());
 }
 
 void GameEngine::Draw()
 {
   // Set the draw colour for screen clearing.
-  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+  SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
 
   // Clear the renderer with the current draw colour.
-  SDL_RenderClear(renderer);
+  SDL_RenderClear(_renderer);
+
+  DrawImpl(_renderer, _engineTimer.GetDeltaTime());
 	
-	player->Draw(renderer,deltaTime);
- 
   // Present what is in our renderer to our window.
-  SDL_RenderPresent(renderer);
+  SDL_RenderPresent(_renderer);
 }

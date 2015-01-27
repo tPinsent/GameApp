@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Game.h"
+#include <time.h>
 
 using namespace std;
 
@@ -7,7 +8,7 @@ int main(int argc, char** argv)
 {
   GameEngine *engine = GameEngine::CreateInstance();
   engine->Initialize();
-
+	srand(time(NULL));
   while(true)
   {
     engine->Update();
