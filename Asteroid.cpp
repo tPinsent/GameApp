@@ -47,7 +47,7 @@ void Asteroid::Initialize()
 	
 	radius = rand() %25 +10;
 	float rotationDegrees = 10.0f;
-	isAlive = true;
+
 
 }
 
@@ -87,3 +87,6 @@ void Asteroid::Draw(SDL_Renderer *renderer, float dt)
 	}
 
 }
+
+float Asteroid::getRadius(){return radius;}
+Vector2 Asteroid::getPosition() {return pos;}

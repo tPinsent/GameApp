@@ -22,7 +22,7 @@ Game::Game() : GameEngine()
 
 void Game::InitializeImpl()
 {
-  // Using the default member-wise initializer for our new struct.
+  score=610;
 	pos.x=100.0f;
 	pos.y=100.0f;
 	endPointOffset.x=10.0f;
@@ -39,10 +39,42 @@ void Game::InitializeImpl()
 
 void Game::UpdateImpl(float dt)
 {
-	printf("%d\n",_player->getDirection());
+
 	_player->Update(dt);
+
+	for(int i = 0; i<MAX_AST; i++)
+	{
+		//bullet
+		float distB = sqrtf(powf(_player->getBulletPos().x-_asteroid[i]->getPosition().x,2) + powf(_player->getBulletPos().y-_asteroid[i]->getPosition().y,2)); //calculate distance between bullet and asteroid
+		if(_asteroid[i]->getRadius() >= distB-20)
+		{
+			score+=100;
+			_player->DestroyBullet();
+			delete _asteroid[i];
+			_asteroid[i] = new Asteroid();
+			_asteroid[i]->Initialize();
+		}
+
+		//ship
+		float distS = sqrtf(powf(_player->getCenter().x-_asteroid[i]->getPosition().x,2) + powf(_player->getCenter().y-_asteroid[i]->getPosition().y,2)); //calculate distance between bullet and asteroid
+		if(_asteroid[i]->getRadius() >= distS-20)
+		{
+			score = 0;
+			_player->Initialize();
+			for(int i=0;i<MAX_AST;i++){
+				_asteroid[i] = new Asteroid();
+				_asteroid[i]->Initialize();
+			}
+			
+		}
+
+
+
+	}
+
 	for(int i=0;i<MAX_AST;i++)
 		_asteroid[i]->Update(dt);
+
 }
 
 void Game::DrawImpl(SDL_Renderer *renderer, float dt)
@@ -54,3 +86,5 @@ void Game::DrawImpl(SDL_Renderer *renderer, float dt)
 
 
 }
+
+float Game::getScore(){return score;}

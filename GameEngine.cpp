@@ -1,6 +1,7 @@
 #include "GameEngine.h"
 #include <SDL.h>
 #include "MathUtils.h"
+#include <stdio.h>
 
 GameEngine::GameEngine()
 {
@@ -16,7 +17,7 @@ void GameEngine::Initialize()
 {
   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
 
-  _window = SDL_CreateWindow("CST8237 Lab",
+  _window = SDL_CreateWindow("CST8237 Lab | score: 0",
     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     640, 640,
     SDL_WINDOW_SHOWN);
@@ -44,6 +45,10 @@ void GameEngine::Update()
   _engineTimer.Update();
 
   UpdateImpl(_engineTimer.GetDeltaTime());
+	char* windowText = new char[100];
+	windowText="CST8237 Lab | score: %d",getScore();
+	printf("CST8237 lab | score: %d\n",getScore());
+	SDL_SetWindowTitle(_window,windowText); 
 }
 
 void GameEngine::Draw()

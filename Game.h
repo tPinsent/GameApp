@@ -14,6 +14,7 @@ protected:
   void InitializeImpl();
   void UpdateImpl(float dt);
   void DrawImpl(SDL_Renderer *renderer, float dt);
+	float getScore();
 
   Player *_player;
 	Asteroid *_asteroid[MAX_AST];
@@ -22,4 +23,5 @@ protected:
   Vector2 endPointOffset;
   float speed;
   float rotationSpeed;
+	float score;
 };

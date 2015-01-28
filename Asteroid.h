@@ -11,10 +11,12 @@ public:
   void Update(float dt);
   void Draw(SDL_Renderer *renderer, float dt);
 
+	float getRadius();
+	Vector2 getPosition();
+
 protected:
 	Vector2 pos;
 	float radius;
-	bool isAlive;
 	int spawn;
 	int changeX;
 	int changeY;

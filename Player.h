@@ -10,7 +10,7 @@
 #define RX ship.right.x
 #define RY ship.right.y
 
-
+class Bullet;
 struct tri{
 	Vector2 front;
 	Vector2 left;
@@ -28,14 +28,18 @@ public:
 	void Initialize();
   void Update(float dt);
   void Draw(SDL_Renderer *renderer, float dt);
-	float getDirection();
+	Vector2 getFront();
+	Vector2 getCenter();
+	Vector2 getBulletPos();
+	void DestroyBullet();
 
 protected: 
+	Bullet *_bullet;
 	Vector2 front;
 	Vector2 left;
 	Vector2 right;
 	tri ship;
-	
+	float b;
   float speed;
   float rotationSpeed;
 	float velocity;

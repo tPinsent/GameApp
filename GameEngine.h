@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Timer.h"
 #include "Asteroid.h"
+#include "Bullet.h"
 
 // Forward declaring our renderer and window.
 // Because we're using them as pointers, we don't need to know their size
@@ -36,7 +37,7 @@ protected:
   virtual void InitializeImpl() = 0;
   virtual void UpdateImpl(float dt) = 0;
   virtual void DrawImpl(SDL_Renderer *renderer, float dt) = 0;
-
+	virtual float getScore()=0;
   static GameEngine *_instance;
 
   SDL_Window *_window;
