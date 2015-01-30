@@ -1,10 +1,12 @@
 #pragma once // Preprocessor directive to ensure that this header will only be included once. -- Generally used on Windows
 
-// Preprocessor directive to ensure that this header will only be included once. -- Generally used for all environments.
-/*#ifndef _GAME_ENGINE_H_
-#define _GAME_ENGINE_H_
+/**
+ * \class GameEngine.h
+ * \brief base game engine, used to drive the game loop
+ * \author Alec Pinsent
+ * \date January 29, 2015
+ */
 
-#endif // _GAME_ENGINE_H_*/
 
 #include "MathUtils.h"
 #include "Player.h"
@@ -34,10 +36,10 @@ public:
 protected:
   GameEngine();
 
+
   virtual void InitializeImpl() = 0;
   virtual void UpdateImpl(float dt) = 0;
   virtual void DrawImpl(SDL_Renderer *renderer, float dt) = 0;
-	virtual float getScore()=0;
   static GameEngine *_instance;
 
   SDL_Window *_window;
@@ -46,4 +48,5 @@ protected:
 	
 
   float _oldTime, _currentTime, _deltaTime;
+	int score;
 };

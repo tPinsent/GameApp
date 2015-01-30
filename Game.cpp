@@ -20,15 +20,13 @@ Game::Game() : GameEngine()
 
 }
 
+/**
+ * \fn void Game::InitializeImpl()
+ * \brief implementation of the main initalizer for the program, initalizes everything that will be used later on
+ */
 void Game::InitializeImpl()
 {
-  score=610;
-	pos.x=100.0f;
-	pos.y=100.0f;
-	endPointOffset.x=10.0f;
-	endPointOffset.y=0.0f;
-  speed = 10.0f;
-  rotationSpeed = 360.0f;
+  score=0;
 	_player = new Player();
 	_player->Initialize();
 	for(int i=0;i<MAX_AST;i++){
@@ -37,6 +35,11 @@ void Game::InitializeImpl()
 	}
 }
 
+/**
+ * \fn void Game::UpdateImpl (float dt)
+ * \brief called repeatedly to update all aspects of the game
+ * \param dt The time in fractions of a second since the last pass.
+ */
 void Game::UpdateImpl(float dt)
 {
 
@@ -53,8 +56,8 @@ void Game::UpdateImpl(float dt)
 			delete _asteroid[i];
 			_asteroid[i] = new Asteroid();
 			_asteroid[i]->Initialize();
+			
 		}
-
 		//ship
 		float distS = sqrtf(powf(_player->getCenter().x-_asteroid[i]->getPosition().x,2) + powf(_player->getCenter().y-_asteroid[i]->getPosition().y,2)); //calculate distance between bullet and asteroid
 		if(_asteroid[i]->getRadius() >= distS-20)
@@ -65,11 +68,7 @@ void Game::UpdateImpl(float dt)
 				_asteroid[i] = new Asteroid();
 				_asteroid[i]->Initialize();
 			}
-			
 		}
-
-
-
 	}
 
 	for(int i=0;i<MAX_AST;i++)
@@ -77,6 +76,13 @@ void Game::UpdateImpl(float dt)
 
 }
 
+/**
+ * \fn void GameObject::Draw(SDL_Renderer *renderer, float dt)
+ * \brief A virtual function that we’ll use as to define how our 
+ * object is drawn to the screen.
+ * \param renderer The SDL renderer used to draw the object.
+ * \param dt The time in fractions of a second since the last pass.
+ */
 void Game::DrawImpl(SDL_Renderer *renderer, float dt)
 {
  
@@ -86,5 +92,3 @@ void Game::DrawImpl(SDL_Renderer *renderer, float dt)
 
 
 }
-
-float Game::getScore(){return score;}

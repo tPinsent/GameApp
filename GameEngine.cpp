@@ -12,7 +12,10 @@ GameEngine::~GameEngine()
 {
 
 }
-
+/**
+ * \fn void GameEngine::Initialize()
+ * \breif initialzies the game engine, window renderer and then calls the games init
+ */
 void GameEngine::Initialize()
 {
   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
@@ -31,6 +34,10 @@ void GameEngine::Initialize()
   _engineTimer.Start();
 }
 
+/**
+ * \fn void GameEngine::Shutdown()
+ * \breif destroys the renderer and window as well as stoping the timer
+ */
 void GameEngine::Shutdown()
 {
   _engineTimer.Stop();
@@ -39,6 +46,10 @@ void GameEngine::Shutdown()
   SDL_DestroyWindow(_window);
 }
 
+/**
+ * \fn void GameEngine::Update()
+ * \breif runs all updates for the program, as well as updating the window title
+ */
 void GameEngine::Update()
 {
   // Calculating the time difference since our last loop.
@@ -46,11 +57,14 @@ void GameEngine::Update()
 
   UpdateImpl(_engineTimer.GetDeltaTime());
 	char* windowText = new char[100];
-	windowText="CST8237 Lab | score: %d",getScore();
-	printf("CST8237 lab | score: %d\n",getScore());
+	sprintf(windowText,"CST8237 lab | score: %d\n",score);
 	SDL_SetWindowTitle(_window,windowText); 
 }
 
+/**
+ * \fn void GameEngine::Draw()
+ * \breif clears the renderer, draws the game to it, then presents it
+ */
 void GameEngine::Draw()
 {
   // Set the draw colour for screen clearing.

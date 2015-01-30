@@ -4,15 +4,16 @@
 #include <stdlib.h>
 #include <math.h>
 
-Asteroid::Asteroid(void)
-{
-}
+Asteroid::Asteroid(void){}
 
 
-Asteroid::~Asteroid(void)
-{
-}
+Asteroid::~Asteroid(void){}
 
+/**
+ * \fn void Asteroid::Initialize()
+ * \brief initializes all the values for the asteroid
+ * randomizes radius, x position, y position, and side of the screen to spawn on
+ */
 void Asteroid::Initialize()
 {
 	spawn = rand() %4;
@@ -51,7 +52,11 @@ void Asteroid::Initialize()
 
 }
 
-
+/**
+ * \fn void Asteroid::Update(float dt)
+ * \brief updates the asteroid potion bsaed on random changes to the X and Y axis
+ * \param dt: the delta time since last call
+ */
 void Asteroid::Update(float dt)
 {
 	pos.x += ((rand() %40) - changeX) * dt;
@@ -66,6 +71,12 @@ void Asteroid::Update(float dt)
 		pos.y-0;
 }
 
+/**
+ * \fn void Asteroid::Draw(SDL_Renderer, float)
+ * \brief canculates and draws the circles around the position that represent the asteroid
+ * \param SDL_Renderer the renderer for the window
+ * \param dt the delta time since last call
+ */
 void Asteroid::Draw(SDL_Renderer *renderer, float dt)
 {
 	static float rotationDegrees = 10.0f;
@@ -87,6 +98,7 @@ void Asteroid::Draw(SDL_Renderer *renderer, float dt)
 	}
 
 }
-
+//returns radius
 float Asteroid::getRadius(){return radius;}
+//returns position
 Vector2 Asteroid::getPosition() {return pos;}

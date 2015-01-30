@@ -1,4 +1,10 @@
 #pragma once
+/**
+ * \class Timer.h
+ * \brief a class used to keep track of the time
+ * \author Justin Wilkinson
+ * \date January 29, 2015
+ */
 
 class Timer;
 

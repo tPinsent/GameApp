@@ -6,20 +6,18 @@
 #include <stdlib.h>
 #include "Bullet.h"
 
-Player::Player(void)
-{
-}
+Player::Player(void){}
 
 
-Player::~Player(void)
-{
-}
+Player::~Player(void){ delete _bullet;}
 
+/**
+ * \fn void Player::Initialize()
+ * \brief used to initalize local variables for the player
+ */
 void Player::Initialize(){
 
-	a=0.0f;
   rotationSpeed = 0.0f;
-	velocity=0.0f;
 	ship.center.x=320.0f;
 	ship.center.y=320.0f;
 	ship.front.x=0.0f;
@@ -32,6 +30,11 @@ void Player::Initialize(){
 	_bullet = NULL;
 }
   
+/**
+ * \fn void Player::Update(float dt)
+ * \brief Update function implementation for the player, checks for input related to the player and bound restriction
+ * \param dt The time in fractions of a second since the last pass.
+ */
 void Player::Update(float dt){
 	SDL_Event evt;
   SDL_PollEvent(&evt);
@@ -76,16 +79,23 @@ void Player::Update(float dt){
 		CY=640;
 	if(CY > 640)
 		CY=0;
+
+
+	//bullet update
 	if(_bullet != NULL)
 		_bullet->Update(dt);
 }
 
+/**
+ * \fn void Player::Draw(SDL_Renderer *renderer, float dt)
+ * \brief used to draw the player on the screen
+ * \param renderer The SDL renderer used to draw the object.
+ * \param dt The time in fractions of a second since the last pass.
+ */
 void Player::Draw(SDL_Renderer *renderer, float dt){
 	 // Set the draw colour for our point.
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 
-  // Draw the point.
-  //SDL_RenderDrawPoint(renderer, posX, posY);
 
   static float rotationDegrees = 10.0f;
   rotationDegrees += (rotationSpeed);
@@ -106,18 +116,21 @@ void Player::Draw(SDL_Renderer *renderer, float dt){
   right.x = RX * cosf(rotationRadians) + RY * sinf(rotationRadians);
   right.y = RX * sinf(rotationRadians) - RY * cosf(rotationRadians);
 
-	//draw the center dot for the player, testing only
-	SDL_RenderDrawPoint(renderer,CX,CY);
 
-	//draw the triangle points calculated earlier
+	//draw the triangle using points calculated earlier
 	SDL_RenderDrawLine(renderer,CX+front.x,CY+front.y,CX+left.x,CY+left.y);
 	SDL_RenderDrawLine(renderer,CX+front.x,CY+front.y,CX+right.x,CY+right.y);
 	SDL_RenderDrawLine(renderer,CX+right.x,CY+right.y,CX+left.x,CY+left.y);
 	
+	//draw the bullet
 	if(_bullet != NULL)
 		_bullet->Draw(renderer,dt);
 }
 
+/**
+ * \fn void Player::DestroyBullet()
+ * \brief used to destroy the bullet when a collision is detected
+ */
 void Player::DestroyBullet(){
 	delete _bullet;
 	_bullet = NULL;
